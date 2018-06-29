@@ -28,20 +28,22 @@
     <h1>网页图片自定义批量预览/下载器</h1>
     <form action="/getImage" method="post"
           onsubmit="return validator();">
-        <input type="text" name="url" id="url" style="width: 260px; height: 35px" placeholder="http://www.meizitu.com/" value="http://www.meizitu.com/"><input type="submit"
-                                                            value="获取网页图片" style="width: 120px; height: 35px">
+        <input type="text" name="url" id="url" style="width: 260px; height: 35px" placeholder="http://www.meizitu.com/"
+               value="http://www.meizitu.com/"><input type="submit"
+                                                      value="获取网页图片" style="width: 120px; height: 35px">
     </form>
     <form action="/downImage" method="post">
-        <h3>
-            一共找到${imageSrc.size() }张图片&nbsp;&nbsp;<input type="submit"  value="下载选中的图片">&nbsp;&nbsp;
-            <button>全选</button>
-            &nbsp;&nbsp;
-            <button>全部取消</button>
-        </h3>
+        <h4>
+            一共找到${imageSrc.size() }张图片&nbsp;&nbsp;
+            <input type="submit" value="下载选中的图片">&nbsp;&nbsp;
+            <input type="button" name="checkall" id="checkall" value="全选" onclick="All()">&nbsp;&nbsp;
+            <input type="button" name="checkall" id="checkall" value="全部取消" onclick="Un()"> &nbsp;文件默认下载D盘 请自行修改
+        </h4>
         <div class="lightBoxGallery">
 
             <c:forEach items="${imageSrc }" var="i">
-                   <a href="${i}" data-gallery=""> <img src='${i }' width='180' height='200' /></a> <input name="selected" type="checkbox" value="${i }">
+                <a href="${i}" data-gallery=""> <img src='${i }' width='180' height='200'/></a>
+                <input name="selected" type="checkbox" value="${i }">
             </c:forEach>
             <div id="blueimp-gallery" class="blueimp-gallery">
                 <div class="slides"></div>
@@ -49,8 +51,6 @@
                 <a class="prev"><</a>
                 <a class="next">></a>
                 <a class="close">×</a>
-                <a class="play-pause"></a>
-                <ol class="indicator"></ol>
             </div>
         </div>
     </form>
@@ -58,6 +58,24 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/blueimp/jquery.blueimp-gallery.min.js"></script>
+<script>
+    function All() {
+        var checkElements = document.getElementsByName('selected');
+        for (var i = 0; i < checkElements.length; i++) {
+            var checkElement = checkElements[i];
+            checkElement.checked = "checked";
+        }
+    }
+
+    function Un() {
+        var checkElements = document.getElementsByName('selected');
+        for (var i = 0; i < checkElements.length; i++) {
+            var checkElement = checkElements[i];
+            checkElement.checked = null;
+        }
+
+    }
+</script>
 <script type="text/javascript">
     function validator() {
         var url = document.getElementById("url").value;

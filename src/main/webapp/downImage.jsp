@@ -5,6 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-<h1>正在下载中</h1>
+<h1>图片下载成功</h1>
 </body>
 </html>

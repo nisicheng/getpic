@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.TabableView;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,8 +72,20 @@ public class IndexController {
         List<String> selecteds = Arrays.asList(selected);
         for (String s : selecteds) {
             String uuidName = UploadUtils.getUUIDName(s);
+            File file=new File("D:/img");
+            if(!file.exists()){
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             String filePath = "D:/img/"+ uuidName;
-            DownloadUtil.downloadImg(s, filePath);
+            try {
+                DownloadUtil.downloadImg(s, filePath);
+            } catch (Exception e) {
+                return "error";
+            }
         }
         return "/downImage";
     }
